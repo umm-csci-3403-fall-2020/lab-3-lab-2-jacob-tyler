@@ -11,17 +11,18 @@ void mergeranges(int* values, int startindex, int midpoint, int endindex){
   int firstindex = startindex;
   int secondindex = midpoint;
   int* destination;
-  destination =(int*) calloc(secondindex, sizeof(int*));
+  destination =(int*) calloc(firstindex, sizeof(int*));
   while(firstindex < midpoint && secondindex< endindex){
     if(values[firstindex] < values[secondindex]){
 	destination[copyindex] = values[firstindex];
 	++firstindex;
       }
       else{
-	destination[copyindex] = values[firstindex];
+	destination[copyindex] = values[secondindex];
 	  secondindex++;
       }
       ++copyindex;
+  }
       while(firstindex < midpoint){
 	destination[copyindex] = values[firstindex];
 	++copyindex;
@@ -38,7 +39,7 @@ void mergeranges(int* values, int startindex, int midpoint, int endindex){
       }
       free(destination);
   }
-}
+
   bool needssorting(int rangesize) {
         return rangesize >= 2;
     }
