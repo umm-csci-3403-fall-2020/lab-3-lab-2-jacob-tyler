@@ -4,6 +4,12 @@
 
 #include "mergesort.h"
 
+void printArray(int A[], int size) {
+  int i;
+  for (i=0; i<size; i++)
+    printf("%d ", A[i]);
+  printf("\n");
+}
 
 void mergeranges(int* values, int startindex, int midpoint, int endindex){
   int rangesize = endindex - startindex;
@@ -11,38 +17,42 @@ void mergeranges(int* values, int startindex, int midpoint, int endindex){
   int firstindex = startindex;
   int secondindex = midpoint;
   int* destination;
-  destination =(int*) calloc(firstindex, sizeof(int*));
+  destination =(int*) calloc(rangesize, sizeof(int*));
   while(firstindex < midpoint && secondindex< endindex){
     if(values[firstindex] < values[secondindex]){
 	destination[copyindex] = values[firstindex];
 	++firstindex;
-      }
-      else{
+      } else{
 	destination[copyindex] = values[secondindex];
-	  secondindex++;
-      }
-      ++copyindex;
-  }
-      while(firstindex < midpoint){
-	destination[copyindex] = values[firstindex];
-	++copyindex;
-	++firstindex;
-      }
-       while(secondindex < endindex){
-	destination[copyindex] = values[secondindex];
-	++copyindex;
 	++secondindex;
       }
-      int i;
-      for(i = 0; i < rangesize; ++i){
-	values[i+startindex] = destination[i];
-      }
-      free(destination);
+    ++copyindex;
   }
 
-  bool needssorting(int rangesize) {
-        return rangesize >= 2;
-    }
+  while(firstindex < midpoint){
+    destination[copyindex] = values[firstindex];
+    ++copyindex;
+    ++firstindex;
+  }
+
+  while(secondindex < endindex){
+    destination[copyindex] = values[secondindex];
+    ++copyindex;
+    ++secondindex;
+  }
+
+  int i;
+  for(i = 0; i < rangesize; ++i){
+    values[i+startindex] = destination[i];
+  }
+
+  free(destination);
+}
+
+bool needssorting(int rangesize) {
+  return rangesize >= 2;
+}
+
 void mergesortrange(int* values, int startindex, int endindex){
   int rangesize;
   int midpoint;
@@ -53,8 +63,8 @@ void mergesortrange(int* values, int startindex, int endindex){
       mergesortrange(values, midpoint, endindex);
       mergeranges(values, startindex, midpoint, endindex);
     }
-  
 }
+
 void mergesort(int length, int* values) {
   return mergesortrange(values, 0, length);
 }
