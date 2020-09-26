@@ -57,7 +57,7 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
   }
 
   //Create an array that will contain the entries of all arrays combined
-  longArray =(int*) calloc(arraySize, sizeof(int));
+  longArray =(int*) calloc(arraySize, sizeof(int*));
 
   memcpy(longArray, values[0], sizes[0]*sizeof(int));
   int appendLocation = sizes[0];

@@ -10,6 +10,13 @@ void arrays_match(int size, int a[], int b[]) {
   }
 }
 
+void freeArray(int** a, int m) {
+  int i;
+  for (i=0; i<m; i++) {
+    free(a[i]);
+  }
+}
+
 TEST(ArrayMerge, Handle_empty_list) {
   int* a[] = { };
   int sizes[] = { };
@@ -93,6 +100,8 @@ TEST(ArrayMerge, Handle_different_sizes) {
 
   result = array_merge(num_arrays, sizes, a);
   arrays_match(11, result, expected);
+
+  freeArray(a, num_arrays);
   free(result);
 }
 
@@ -114,6 +123,8 @@ TEST(ArrayMerge, Handle_different_sizes_reversed) {
 
   result = array_merge(num_arrays, sizes, a);
   arrays_match(11, result, expected);
+
+  freeArray(a, num_arrays);
   free(result);
 }
 
