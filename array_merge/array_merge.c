@@ -4,7 +4,8 @@
 #include <cstring>
 #include "mergesort.h"
 
-int removeDuplicates(int* array, int size) { //Needs work
+//Takes in an array and removes the duplicates.
+int removeDuplicates(int* array, int size) {
   if (size <= 1)
     return size;
 
@@ -25,9 +26,11 @@ int removeDuplicates(int* array, int size) { //Needs work
   for (i=0; i<j; i++)
     array[i] = tmp[i];
 
+  free(tmp);
   return j;
 }
 
+//A debugging tool used to print arrays
 void printArray(int A[], int size) {
   int i;
   for (i=0; i<size; i++)
@@ -37,7 +40,6 @@ void printArray(int A[], int size) {
 
 int* array_merge(int num_arrays, int* sizes, int** values) {
   int i;
-  //int j;
   int arraySize = 0;
   int *longArray;
 
@@ -68,18 +70,18 @@ int* array_merge(int num_arrays, int* sizes, int** values) {
   mergesort(arraySize, longArray);
 
   //Eliminate Duplicates
-  printf("\nBefore\n");
-  printArray(longArray, arraySize);
-
   int newArraySize;
   newArraySize = removeDuplicates(longArray, arraySize);
-  printf("After\n");
-  printArray(longArray, arraySize);
-  printf("newArraySize=%d\n", newArraySize);
-
-  //Count the number of entries
 
   //Create a new array starting with the size of the array
+  int *result;
+  result = (int*) calloc(newArraySize+1, sizeof(int));
 
-  return sizes;
+  result[0] = newArraySize;
+  for (i=1; i<=newArraySize; i++) {
+    result[i] = longArray[i-1];
+  }
+
+  free(longArray);
+  return result;
 }
